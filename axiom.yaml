@@ -1,0 +1,7 @@
+name: axiom-text-ops
+version: 0.1.0
+language: go
+nodes:
+    - name: Tokenize
+      input: TextRequest
+      output: TokensResult
