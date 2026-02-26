@@ -4,9 +4,19 @@ import (
 	"context"
 	"testing"
 
+	"axiom-text-ops/axiom"
 	gen "axiom-text-ops/gen"
 	"axiom-text-ops/nodes"
 )
+
+type testLogger struct{ t *testing.T }
+
+func (l *testLogger) Debug(msg string, args ...any) { l.t.Logf("DEBUG  %s %v", msg, args) }
+func (l *testLogger) Info(msg string, args ...any)  { l.t.Logf("INFO   %s %v", msg, args) }
+func (l *testLogger) Warn(msg string, args ...any)  { l.t.Logf("WARN   %s %v", msg, args) }
+func (l *testLogger) Error(msg string, args ...any) { l.t.Logf("ERROR  %s %v", msg, args) }
+
+var _ axiom.Logger = (*testLogger)(nil)
 
 // TESTS — delete this block when done ─────────────────────────────────────────
 // Tests are required to publish this package. The publish pipeline runs your
@@ -27,12 +37,15 @@ import (
 
 func TestTokenize(t *testing.T) {
 	ctx := context.Background()
-	input := &gen.TextRequest{}
+	log := &testLogger{t}
+	input := &gen.TextRequest{Text: "hello world"}
 
-	got, err := nodes.Tokenize(ctx, input)
+	got, err := nodes.Tokenize(ctx, log, input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	_ = got // TODO: assert output fields — e.g. if got.SomeField != "expected" { t.Errorf(...) }
+	if got.Count != 2 {
+		t.Errorf("expected 2 tokens, got %d", got.Count)
+	}
 }
