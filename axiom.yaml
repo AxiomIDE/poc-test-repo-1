@@ -5,3 +5,7 @@ nodes:
     - name: Tokenize
       input: TextRequest
       output: TokensResult
+    - name: Chunk
+      input: TextRequest
+      output: TokensResult
+      type: pipeline
