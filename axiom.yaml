@@ -5,6 +5,8 @@ nodes:
     - name: Tokenize
       input: TextRequest
       output: TokensResult
+      required_secrets:
+        - MY_SECRET
     - name: Chunk
       input: TextRequest
       output: TokensResult
