@@ -18,6 +18,12 @@ func (l *testLogger) Error(msg string, args ...any) { l.t.Logf("ERROR  %s %v", m
 
 var _ axiom.Logger = (*testLogger)(nil)
 
+type testSecrets struct{}
+
+func (testSecrets) Get(_ string) (string, bool) { return "", false }
+
+var _ axiom.Secrets = testSecrets{}
+
 // TESTS — delete this block when done ─────────────────────────────────────────
 // Tests are required to publish this package. The publish pipeline runs your
 // tests as a quality gate — a package will not be published if tests fail or
@@ -40,7 +46,7 @@ func TestTokenize(t *testing.T) {
 	log := &testLogger{t}
 	input := &gen.TextRequest{Text: "hello world"}
 
-	got, err := nodes.Tokenize(ctx, log, input)
+	got, err := nodes.Tokenize(ctx, log, testSecrets{}, input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

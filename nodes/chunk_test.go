@@ -12,7 +12,7 @@ func TestChunk(t *testing.T) {
 	in <- &gen.TextRequest{Text: "hello world"}
 	close(in)
 
-	err := Chunk(nil, nil, in, func(r *gen.TokensResult) error {
+	err := Chunk(nil, nil, nil, in, func(r *gen.TokensResult) error {
 		results = append(results, r)
 		return nil
 	})

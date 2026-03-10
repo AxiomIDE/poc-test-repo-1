@@ -10,7 +10,7 @@ import (
 
 // Tokenize splits input text on whitespace and returns the individual tokens
 // along with the total token count.
-func Tokenize(ctx context.Context, log axiom.Logger, input *gen.TextRequest) (*gen.TokensResult, error) {
+func Tokenize(ctx context.Context, log axiom.Logger, secrets axiom.Secrets, input *gen.TextRequest) (*gen.TokensResult, error) {
 	log.Info("Hello, from Tokenize! Modified.")
 	tokens := strings.Fields(input.GetText())
 	return &gen.TokensResult{
