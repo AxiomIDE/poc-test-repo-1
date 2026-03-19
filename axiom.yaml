@@ -1,4 +1,4 @@
-name: christian/axiom-text-ops
+name: axiom-official/axiom-text-ops
 version: 0.1.0
 language: go
 nodes:
