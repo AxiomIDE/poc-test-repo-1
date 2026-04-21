@@ -10,7 +10,7 @@ import (
 
 // Chunk splits the input text into individual word tokens and emits one
 // TokensResult frame per word, demonstrating a pipeline node.
-func Chunk(ctx context.Context, log axiom.Logger, secrets axiom.Secrets, in <-chan *gen.TextRequest, emit func(*gen.TokensResult) error) error {
+func Chunk(ctx context.Context, ax axiom.Context, in <-chan *gen.TextRequest, emit func(*gen.TokensResult) error) error {
 	for input := range in {
 		words := strings.Fields(input.GetText())
 		for _, w := range words {
